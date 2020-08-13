@@ -1,7 +1,9 @@
 <?php
    
 namespace App\Http\Controllers;
-  
+
+use Illuminate\Support\Facades\DB;
+
 class ParserController extends Controller
 {
   
@@ -15,18 +17,23 @@ class ParserController extends Controller
         $filePath = public_path() . '\uploads'. DIRECTORY_SEPARATOR . $filename;
         $handle = fopen($filePath, "r");
         if ($handle) {
+            $z = 1;
             while (($line = fgets($handle)) !== false) {
                 $expLine = explode(" ",$line);
-                for($i = 0;$i < 5;$i++) {
-                    echo $expLine[$i];
-                    echo " ";
-                    DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
-                }
-                for($i = 5;$i < 10;$i++) {
-                    echo $expLine[$i];
-                    echo " ";
-                }
-                die;
+                $hand1 = implode(" ",array_slice($expLine, 0, 5, true));
+                $hand2 = implode(" ",array_slice($expLine, 5, 5, true));
+                
+                $pokerHand = new \App\PokerHands();
+                $pokerHand->hand = $hand1;
+                $pokerHand->handNo = $z;
+                $pokerHand->user_id = 1;
+                $pokerHand->save();
+                
+                $pokerHand = new \App\PokerHands();
+                $pokerHand->hand = $hand2;
+                $pokerHand->handNo = $z;
+                $pokerHand->user_id = 2;
+                $pokerHand->save();
             }
             fclose($handle);
         } else {

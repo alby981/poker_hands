@@ -28,7 +28,6 @@ class FileUploadController extends Controller
         ]);
   
         $fileName = 'PokerHands.' . time().'.'.$request->file->extension();  
-   
         $request->file->move(public_path('uploads'), $fileName);
         
         $parserController = new ParserController();

@@ -15,6 +15,9 @@ class CreatePokerHandsTable extends Migration
     {
         Schema::create('poker_hands', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->string('hand');
+            $table->string('handNo');
             $table->timestamps();
         });
     }
