@@ -19,10 +19,8 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth']], function() {
     // your routes
 });
-Route::get('pokerhands', function () {
-    return view('pokerhands');
-})->name('pokerhands');
-
+Route::get('pokerhands','PokerHandsController@get')->name('pokerhands');
+//
 Route::get('uploadpokerhands', function () {
     return view('uploadpokerhands');
 })->name('uploadpokerhands');

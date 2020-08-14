@@ -62,6 +62,11 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            
+            .table {
+                margin: auto;
+                width: 50% !important; 
+             }
         </style>
     </head>
     <body>
@@ -81,6 +86,32 @@
             @endif
             <div class="content">
                 @include('default-navigation')
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-4">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <th>Player1 Hand</th>
+                                    <th>Player2 Hand</th>
+                                    <th>Winner</th>
+                                    <th>With</th>
+                                    <th>VS</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($pokerHands as $pokerHand) 
+                                        <tr>
+                                            <td>{{$pokerHand->handPlayer1}}</td>
+                                            <td>{{$pokerHand->handPlayer2}}</td>
+                                            <td>{{$pokerHand->winner}}</td>
+                                            <td>{{$pokerHand->with}}</td>
+                                            <td>{{$pokerHand->vs}}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
