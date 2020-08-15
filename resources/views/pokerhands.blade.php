@@ -79,6 +79,7 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-4 mt-3">
+                            Player 1 wins: {{$totWinningsPlayer1}} times. 
                             <table class="table table-bordered ">
                                 <thead>
                                     <th>Player1 Hand</th>

@@ -42,6 +42,8 @@ It's still too complex imho, and i would like to change it, but due to time i wa
 Of course i can explain how it works and the logic behind it, it's nothing really complicated. 
 Tbh, i would like to do with bitwise comparisons that sounds to me the best solution, even in terms of performance, but 
 is the less readable and, in that case, i had to do longer tests, so i preferred to follow a more "naive" approach.  
+You find in the code something that it can be done differently, for instance in some for loops i use the "count". That's something i usually avoid,
+because of performance. It's a small change to do, nothing really major, but i just wanted to pointed it out. :D 
 
 ### Framework Used
 

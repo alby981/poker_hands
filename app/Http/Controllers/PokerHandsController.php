@@ -17,7 +17,8 @@ class PokerHandsController extends Controller {
             $ph->handPlayer1 = PokerHelper::toSuits($ph->handPlayer1);
             $ph->handPlayer2 = PokerHelper::toSuits($ph->handPlayer2);
         }
-        return view('pokerhands')->with(compact('pokerHands'));
+        $totWinningsPlayer1 = PokerHands::where('winner', 'Player 1')->count();
+        return view('pokerhands')->with(compact('pokerHands','totWinningsPlayer1'));
     }
     
     public function checkWinner($hand1, $hand2) {
