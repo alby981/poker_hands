@@ -1,6 +1,6 @@
-#PokerHands Test
+# PokerHands Test
 
-##How to install and deploy?
+## How to install and deploy?
 
 Following the steps to install and deploy the application:
 
@@ -16,7 +16,7 @@ Following the steps to install and deploy the application:
 - give full permission to folder "public/uploads"
 
 
-##How does the test works?
+## How does the test works?
 
 - "Poker Hands" is the page that shows the results, and the winners. 
 You can see how the winner wins the hand VS the opponent hand. 
@@ -27,7 +27,7 @@ I could have done that at a different moment, but i just chose this approach for
 
 - In order to Upload the file, you need to be logged in and, of course, you need to register yourself first. 
 
-##Notes
+## Notes
 
 ### Slow uploading of file
 
@@ -54,7 +54,7 @@ At the moment, due to time, i just set inline code and i didn't put too much eff
 I can do it way better, of course, but i prefer, like i said before, to provide the solution as quickest as possible. 
 If it was an enterprise solution, i would have done way differently, using centralized (scss) and a better templating system. 
 
-##Additional Notes
+## Additional Notes
 
 - If you find any issue with the deploy process, even though you shouldn't, I can provide a website of mine, that contain 
 the full code and works already. I have a VPS with Linux, and everything is set up and working. 
