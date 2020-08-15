@@ -85,45 +85,27 @@ class PokerHand {
     }
    
     public function isStraight() {
-        $card_order = self::$card_order;
-
         if ($this->isRoyal()) {
             return true;
         }
-
-        $straight = array_reduce($this->cards, function(&$result, $item) use ($card_order) {
-            if (empty($result['cards'])) {
-                $result['cards'][] = $item->value;
-                $result['straight'] = true;
-            } elseif ($result['straight']) {
-                // Continue to go through each card if a straight is a possibility.
-                $straight_continues = false;
-
-                foreach ($result['cards'] as $card_value) {
-                    // Janky fix for non-numeric card values.
-                    if (!is_numeric($card_value)) {
-                        $card_value = self::$card_order[$card_value];
-                    }
-
-                    if (($card_value + 1 == $item->value || $card_value - 1 == $item->value) && !in_array($item->value, $result['cards'])) {
-                        // if the current card is one greater or less than a
-                        // card in the straight, AND there are no sets of any thing.
-                        $straight_continues = true;
-                        break;
-                    }
-                }
-
-                if ($straight_continues) {
-                    $result['cards'][] = $item->value;
-                    $result['straight'] = true;
-                } else {
-                    $result['straight'] = false;
-                }
+        $aTmpCards = [];
+        foreach($this->cards as $card) {
+            $cardValue = $card->value;
+            $aTmpCards[] = self::$card_order[$cardValue];
+        }
+        rsort($aTmpCards);
+        for ($i = 0;$i < count($aTmpCards);$i++) {
+            if (empty($aTmpCards[$i+1])) {
+                $result['cards'][] = $aTmpCards[$i];
+                $straight['straight'] = true;
+                break;
             }
-
-            return $result;
-        });
-
+            $result['cards'][] = $aTmpCards[$i];
+            if (intval($aTmpCards[$i] - 1) != intval(($aTmpCards[$i+1]))) {
+                $straight['straight'] = false;
+                break;
+            }
+        }
         return $straight['straight'];
     }
 
@@ -182,11 +164,6 @@ class PokerHand {
         }
         return $items;
     }
-
-//    public function setSets() {
-//        $this->sets = $this->getSetsOfAKind();
-//        return $this;
-//    }
 
     public function getHighCard(array $cards) {
         $suit_rank = array_flip(array_keys(self::$suit_chars));

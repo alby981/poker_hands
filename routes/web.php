@@ -16,14 +16,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('login', array('as' => 'login','uses' => 'HomeController@showLogin'));
+Route::post('login', array('as' => 'login','uses' => 'HomeController@doLogin'));
+Route::get('logout', array('as' => 'logout','uses' => 'HomeController@doLogout'));
+
+
 Route::group(['middleware' => ['auth']], function() {
-    // your routes
+    Route::get('uploadpokerhands', function () {
+        return view('uploadpokerhands');
+    })->name('uploadpokerhands');
 });
+
 Route::get('pokerhands','PokerHandsController@get')->name('pokerhands');
-//
-Route::get('uploadpokerhands', function () {
-    return view('uploadpokerhands');
-})->name('uploadpokerhands');
-
-
 Route::post('file-upload', 'FileUploadController@fileUploadPost')->name('file.upload.post');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

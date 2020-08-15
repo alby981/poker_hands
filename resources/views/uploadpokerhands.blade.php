@@ -61,61 +61,47 @@
     </head>
     <body>
         <div class="">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
             <div class="content">
                 @include('default-navigation')
-                 <div class="panel panel-primary">
+                <div class="panel panel-primary">
                     <div class="panel-heading"><h2>Upload Poker Hands here</h2></div>
                     <div class="panel-body">
 
-                      @if ($message = Session::get('success'))
-                      <div class="alert alert-success alert-block">
-                          <button type="button" class="close" data-dismiss="alert">×</button>
-                              <strong>{{ $message }}</strong>
-                      </div>
-                      <img src="uploads/{{ Session::get('file') }}">
-                      @endif
+                        @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <strong>{{ $message }}</strong>
+                        </div>
+                        @endif
 
-                      @if (count($errors) > 0)
-                          <div class="alert alert-danger">
-                              <strong>Whoops!</strong> There were some problems with your input.
-                              <ul>
-                                  @foreach ($errors->all() as $error)
-                                      <li>{{ $error }}</li>
-                                  @endforeach
-                              </ul>
-                          </div>
-                      @endif
+                        @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
 
-                      <form action="{{ route('file.upload.post') }}" method="POST" enctype="multipart/form-data">
-                          @csrf
-                          <div class="row">
+                        <form action="{{ route('file.upload.post') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row">
 
-                              <div class="col-md-6">
-                                  <input type="file" name="file" class="form-control">
-                              </div>
+                                <div class="col-md-6">
+                                    <input type="file" name="file" class="form-control">
+                                </div>
 
-                              <div class="col-md-6">
-                                  <button type="submit" class="btn btn-success">Upload</button>
-                              </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-success">Upload</button>
+                                </div>
 
-                          </div>
-                      </form>
+                            </div>
+                        </form>
 
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
     </body>
