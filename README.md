@@ -36,3 +36,7 @@ At the moment, due to time, i just set inline code and i didn't put much effort 
 I can do it way better, of course, but i prefer, like i said before, to provide the solution as quickest as possible. 
 If it was an enterprise solution, i would have done way differently, using centralized (scss) and a better templating. 
 
+Additional
+If you find any issue with the deploy process, or if you want, something ready. I can provide you with a website of mine, that contain 
+the full code and works already. Just ask for it, now is offline just for security purposes. But i can activate the code if you need it. 
+:)
