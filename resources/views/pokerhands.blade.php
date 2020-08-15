@@ -67,6 +67,15 @@
                 margin: auto;
                 width: 50% !important; 
              }
+            td div {
+                display: inline-block;
+                color: black;
+                font-size: 22px;
+                min-width: 35px;
+            }
+            .red {
+                color: red;
+            }
         </style>
     </head>
     <body>
@@ -88,8 +97,8 @@
                 @include('default-navigation')
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-12 col-md-4">
-                            <table class="table table-bordered">
+                        <div class="col-12 col-md-4 mt-3">
+                            <table class="table table-bordered ">
                                 <thead>
                                     <th>Player1 Hand</th>
                                     <th>Player2 Hand</th>
@@ -100,8 +109,8 @@
                                 <tbody>
                                     @foreach ($pokerHands as $pokerHand) 
                                         <tr>
-                                            <td>{{$pokerHand->handPlayer1}}</td>
-                                            <td>{{$pokerHand->handPlayer2}}</td>
+                                            <td>{!! $pokerHand->handPlayer1 !!} </td>
+                                            <td>{!! $pokerHand->handPlayer2 !!} </td>
                                             <td>{{$pokerHand->winner}}</td>
                                             <td>{{$pokerHand->with}}</td>
                                             <td>{{$pokerHand->vs}}</td>

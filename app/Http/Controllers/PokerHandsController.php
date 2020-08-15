@@ -6,11 +6,17 @@ use Illuminate\Support\Facades\DB;
 use App\PokerHands as PokerHands;
 use App\Feed\PokerHandFeedGenerator;
 use App\Collection\PokerHandCollection;
+use App\Helpers\PokerHelper;
 
 class PokerHandsController extends Controller {
 
     public function get() {
         $pokerHands = PokerHands::all();
+        foreach($pokerHands as $ph) {
+            
+            $ph->handPlayer1 = PokerHelper::toSuits($ph->handPlayer1);
+            $ph->handPlayer2 = PokerHelper::toSuits($ph->handPlayer2);
+        }
         return view('pokerhands')->with(compact('pokerHands'));
     }
     
