@@ -10,7 +10,7 @@ class ParserController extends Controller
   
     public function parse($filename)
     {
-        $filePath = public_path() . '\uploads'. DIRECTORY_SEPARATOR . $filename;
+        $filePath = public_path() . DIRECTORY_SEPARATOR . 'uploads'. DIRECTORY_SEPARATOR . $filename;
         $handle = fopen($filePath, "r");
         if ($handle) {
             PokerHands::query()->truncate();
