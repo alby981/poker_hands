@@ -58,8 +58,18 @@ class PokerHandCollection {
             return 1;
         }
         $a_cards = $a->getScoringCards();
+        /* might be a lower straight... lets check. */
+        if ($a->hand_rank == 5) {
+            $isStraight = PokerHand::isStraightC($a->cards, true);
+            if(!empty($isStraight['lower'])) {
+                return 1;
+            }
+            $isStraight = PokerHand::isStraightC($b->cards, true);
+            if(!empty($isStraight['lower'])) {
+                return -1;
+            }
+        }
         $a_high_card = $a->getHighCard($a_cards);
-
         if (count($a_cards) == 5 && $a_high_card::compare($a->getHighCard($a_cards), $b->getHighCard($b->cards))) {
             return -1;
         } elseif (count($a_cards) < 5) {

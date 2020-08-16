@@ -61,6 +61,25 @@ class PokerHand {
     );
 
     /**
+     * ordinal card value order by key for lower straight
+     */
+    static public $card_order_low_straight = array(
+        'A' => 1,
+        2 => 2,
+        3 => 3,
+        4 => 4,
+        5 => 5,
+        6 => 6,
+        7 => 7,
+        8 => 8,
+        9 => 9,
+        10 => 10,
+        'J' => 11,
+        'Q' => 12,
+        'K' => 13,
+    );
+
+    /**
      * HTML entities for suits.
      */
     static public $suit_chars = array(
@@ -70,7 +89,6 @@ class PokerHand {
         'C' => '&clubs;',
     );
 
-   
     public function addCard($card, $suit, $value) {
         if (is_array($this->cards) && count($this->cards) == 5) {
             throw new Exception('Cannot add another card to the hand.');
@@ -83,30 +101,57 @@ class PokerHand {
 
         return $this;
     }
-   
-    public function isStraight() {
-        if ($this->isRoyal()) {
-            return true;
-        }
+    /**
+     * Check if is a lower straight or a normal one
+     * @param type $cards
+     * @param type $lower
+     * @return boolean
+     */
+    public static function isStraightC($cards, $lower = false) {
         $aTmpCards = [];
-        foreach($this->cards as $card) {
+        $straight = [];
+        foreach ($cards as $card) {
             $cardValue = $card->value;
-            $aTmpCards[] = self::$card_order[$cardValue];
+            if($lower) {
+                $aTmpCards[] = self::$card_order_low_straight[$cardValue];
+            } else {
+                $aTmpCards[] = self::$card_order[$cardValue];
+            }
         }
         rsort($aTmpCards);
-        for ($i = 0;$i < count($aTmpCards);$i++) {
-            if (empty($aTmpCards[$i+1])) {
-                $result['cards'][] = $aTmpCards[$i];
+        for ($i = 0; $i < count($aTmpCards); $i++) {
+            if (empty($aTmpCards[$i + 1])) {
                 $straight['straight'] = true;
                 break;
             }
             $result['cards'][] = $aTmpCards[$i];
-            if (intval($aTmpCards[$i] - 1) != intval(($aTmpCards[$i+1]))) {
+            if (intval($aTmpCards[$i] - 1) != intval(($aTmpCards[$i + 1]))) {
                 $straight['straight'] = false;
                 break;
             }
         }
-        return $straight['straight'];
+        $straight['lower'] = false;
+        if (count(array_intersect($aTmpCards, [1,2,3,4,5])) == 5){
+            $straight['lower'] = true;
+        }
+        return $straight;
+    }
+    
+    
+    public function isStraight() {
+        if ($this->isRoyal()) {
+            return true;
+        }
+        $cards = $this->cards;
+        //check for lower straight
+        if (!empty(self::isStraightC($cards, $lower = true)['straight'])) {
+            return true;
+        }
+        //check for normal straight
+        if (!empty(self::isStraightC($cards)['straight'])) {
+            return true;
+        }
+        return false;
     }
 
     public function isRoyal() {
@@ -170,7 +215,7 @@ class PokerHand {
         $ranks = self::$card_order;
 
         return array_reduce($cards, function(&$result, $item) use ($suit_rank, $ranks) {
-            if (empty($result) || $ranks[$item->value] > $ranks[$result->value] || $ranks[$item->value] == $ranks[$result->value] && $suit_rank[$item->suit] < $suit_rank[$result->suit] ) {
+            if (empty($result) || $ranks[$item->value] > $ranks[$result->value] || $ranks[$item->value] == $ranks[$result->value] && $suit_rank[$item->suit] < $suit_rank[$result->suit]) {
                 $result = $item;
             }
             return $result;
@@ -193,7 +238,7 @@ class PokerHand {
         } elseif ($this->sets['three']) {
             $set = array($this->sets['three']);
         }
-        
+
         return array_reduce($this->cards, function(&$result, $item) use ($set) {
             if ($item->value == $set[0] || (isset($set[1]) && $item->value == $set[1])) {
                 $result[$item->card] = $item;
@@ -229,4 +274,5 @@ class PokerHand {
         }
         return $this;
     }
+
 }
